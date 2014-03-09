@@ -8,12 +8,9 @@ IMAGE_INSTALL = "packagegroup-core-boot \
 		openssh \
 		nfs-utils \
 		i2c-tools \
-		curl \
 		rpm \
 		python-core \
-		python-pycurl \
 		sqlite \
-		samba \
 		lighttpd \
 		"
 
