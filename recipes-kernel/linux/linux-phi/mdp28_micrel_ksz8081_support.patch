@@ -1,0 +1,29 @@
+diff -uNr linux/drivers/net/phy/micrel.c kernel/drivers/net/phy/micrel.c
+--- linux/drivers/net/phy/micrel.c	2014-02-13 18:21:22.000000000 -0200
++++ kernel/drivers/net/phy/micrel.c	2014-02-12 15:34:02.000000000 -0200
+@@ -124,6 +124,16 @@
+ 	return 0;
+ }
+ 
++static int ksz8081_mdp28_init(struct phy_device *phydev)
++{
++        int rc;
++        int regval;
++        regval = phy_read(phydev, MII_KSZPHY_CTRL);
++        regval |= KSZ8051_RMII_50MHZ_CLK;
++        rc = phy_write(phydev, MII_KSZPHY_CTRL, regval);
++        return rc < 0 ? rc : 0;
++}
++
+ static int ksz8021_config_init(struct phy_device *phydev)
+ {
+ 	int rc;
+@@ -257,7 +267,7 @@
+ 	.phy_id_mask	= 0x00fffff0,
+ 	.features	= (PHY_BASIC_FEATURES | SUPPORTED_Pause),
+ 	.flags		= PHY_HAS_MAGICANEG | PHY_HAS_INTERRUPT,
+-	.config_init	= kszphy_config_init,
++	.config_init	= ksz8081_mdp28_init,
+ 	.config_aneg	= genphy_config_aneg,
+ 	.read_status	= genphy_read_status,
+ 	.ack_interrupt	= kszphy_ack_interrupt,
